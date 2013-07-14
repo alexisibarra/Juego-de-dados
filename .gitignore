@@ -1,4 +1,4 @@
 *.o 
-juegodedados_p 
-juegodedados_h
+juegodedados_{h,p}{,.o} 
+tirada_*
 *.swp
