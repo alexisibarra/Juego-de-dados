@@ -5,7 +5,7 @@
  *
  *    Description:  
  *
- *        Version:  procesos_1.0
+ *        Version:  1.0
  *        Created:  14/07/13 16:07:18
  *       Revision:  none
  *       Compiler:  gcc
