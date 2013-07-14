@@ -5,3 +5,4 @@ juegodedados_h
 juegodedados_h.o
 tirada_*
 *.swp
+*.h.gch
