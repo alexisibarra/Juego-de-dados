@@ -1,12 +1,47 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  juegodedados_p.c
+ *
+ *    Description:  
+ *
+ *        Version:  procesos_1.0
+ *        Created:  14/07/13 16:07:18
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  Alexis Ibarra (ai), ar.ibarrasalas@gmail.com
+ *   Organization:  Universidad Simón Bolívar
+ *
+ * =====================================================================================
+ */
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <sysexits.h>
 
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  usage
+ *  Description:  Despliega en pantalla un mensaje con la invocación correcta del progra
+ *  							ma
+ * =====================================================================================
+ */
 void usage(){
 	printf("\n SINTAXIS:\n juegodedados_p [-n i] [-s x] [-h]\n -n i: tamano de la secuencia (por defecto, 10)\n -s x: semilla (por defecto, 1)\n -j y: numero de jugadores\n -h: imprime esta ayuda y sale\n\n");
 }
 
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  help
+ *  Description:  Imprime por pantalla el mensaje de ayuda del programa
+ * =====================================================================================
+ */
 void help() {
   printf("\n juegodedados_p: imprime una secuencia de numeros aleatorios\n");
 	usage();
@@ -42,10 +77,15 @@ procCML (int argc, char **argv)
 				if (optarg != NULL){
 					if (isNumeric(optarg)){
 						nvalue = atoi(optarg);
-						nflag = 1;
+						if (nvalue>20){
+							fprintf (stderr, "El argumento de -n debe estar entre 1 y 20\n");
+							abort();
+						}else{
+							nflag = 1;
+						}
 					} else {
 						fprintf (stderr, "Valor `%s' no válida.\n", optarg);
-						usage();
+						abort();
 					}
 				}
         break;
@@ -56,6 +96,7 @@ procCML (int argc, char **argv)
 						sflag = 1;
 					} else {
 						fprintf (stderr, "Valor `%s' no válida.\n", optarg);
+						abort();
 					}
 				}
         break;
@@ -66,6 +107,7 @@ procCML (int argc, char **argv)
 						jflag = 1;
 					} else {
 						fprintf (stderr, "Valor `%s' no válida.\n", optarg);
+						abort();
 					}
 				}
         break;
@@ -91,16 +133,74 @@ procCML (int argc, char **argv)
 	else {
 		printf("Numero de tiradas: %d\nSemilla: %d\nJugadores: %d\n",nvalue,svalue,jvalue);
 	}
-	outputs[0]=jvalue;
+	outputs[0]=nvalue;
 	outputs[1]=svalue;
-	outputs[2]=nvalue;
-	outputs[4]=hflag;
+	outputs[2]=jvalue;
+	outputs[3]=hflag;
 	return outputs;
+}
+
+int tirarDados(int indice, int nTiradas, int seed){
+	srand(seed);
+	int j;
+	int cuenta=0;
+	int tirada;
+	FILE *fp;
+	char nArchivo[80];
+	printf("Soy el proceso %d\n",indice);
+	printf("Generé: ");
+	sprintf(nArchivo,"tirada_%d",indice);
+  fp = fopen(nArchivo, "w+");   /* Abrir archivo para escritura */
+  if (fp == NULL) {
+    perror("El archivo no existe; fopen");
+    exit(EX_USAGE);
+  }
+	fprintf(fp,"Jugador: %d\n",indice);
+	fprintf(fp,"Número de tiradas: %d\n",nTiradas);
+	for(j=1;j<=nTiradas;j++){
+		tirada = 1+rand()%6;
+		cuenta +=tirada; 
+		printf("%d, ",tirada );
+		fprintf(fp,"Tirada %d: %d\n",j,tirada);
+	}
+	fprintf(fp,"TOTAL: %d\n",cuenta);
+	printf("el total es %d\n",cuenta);
+	fclose(fp);
+	return cuenta;
+}
+
+int rdtsc()
+{
+	__asm__ __volatile__("rdtsc");
 }
 
 int
 main (int argc, char **argv)
 {
 	int * p = procCML(argc,argv);
-	printf("%d",p[0]);
+	int nvalue=p[0]; 
+	int svalue=p[1]; 
+	int jvalue=p[2]; 
+	int i, n;
+  int status;
+  pid_t childpid;
+//	srand(svalue);
+	srand(rdtsc());
+  for (i = 1; i <= jvalue; i++){
+		int x = rand();
+		childpid=fork();
+		if (childpid==0){
+			exit(tirarDados(i,nvalue,x));
+		}else 
+		if (childpid <= 0)
+			break;
+	}
+  while (1) {
+		childpid = wait(&status);
+		if ((childpid == -1) && (errno != EINTR))
+			break;
+		printf("Un hijo con PID %d y padre %d termino con codigo de salida %d\n", childpid, getpid(), status>>8);
+  }
+  printf("Este es el proceso %ld con padre %ld\n", (long)getpid(), (long)getppid());
+	return 0;
 }
