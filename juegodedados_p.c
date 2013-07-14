@@ -24,7 +24,6 @@
 #include <string.h>
 #include <sysexits.h>
 
-
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  usage
@@ -47,6 +46,14 @@ void help() {
 	usage();
 }
 
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  isNumeric
+ *  Description:  Función booleana que determina si un string dado es numérico
+ *      Entrada:  s: String a analizar
+ *       Salida:  1 en caso si s es numérica, 0 en caso contrario
+ * =====================================================================================
+ */
 int isNumeric (const char * s)
 {
     if (s == NULL || *s == '\0' || isspace(*s))
@@ -56,7 +63,15 @@ int isNumeric (const char * s)
     return *p == '\0';
 }
 
-
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  procCML 
+ *  Description:  Procesa la linea de argumentos con la que es invocado el programa
+ *      Entrada:  argc: Número de argumentos 
+ *      					argv: String con los argumentos
+ *       Salida:  outputs: arreglo de strings con los flags y valores procesados
+ * =====================================================================================
+ */
 int*
 procCML (int argc, char **argv)
 {
@@ -140,6 +155,17 @@ procCML (int argc, char **argv)
 	return outputs;
 }
 
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  tirarDados
+ *  Description:  Implementa la tirada de dados de un jugador, crea un fichero y escribe
+ *  							en él la información de cada tirada y el número total de puntos.
+ *      Entrada:  indice: Entero que representa el numero del jugador
+ *      					nTiradas: Entero con el número de tiradas
+ *      					seed: Entero con la semilla
+ *       Salida:  cuenta: Entero con la suma de las tiradas del jugador
+ * =====================================================================================
+ */
 int tirarDados(int indice, int nTiradas, int seed){
 	srand(seed);
 	int j;
@@ -150,7 +176,7 @@ int tirarDados(int indice, int nTiradas, int seed){
 	printf("Soy el proceso %d\n",indice);
 	printf("Generé: ");
 	sprintf(nArchivo,"tirada_%d",indice);
-  fp = fopen(nArchivo, "w+");   /* Abrir archivo para escritura */
+  fp = fopen(nArchivo, "w+");   
   if (fp == NULL) {
     perror("El archivo no existe; fopen");
     exit(EX_USAGE);
@@ -169,11 +195,25 @@ int tirarDados(int indice, int nTiradas, int seed){
 	return cuenta;
 }
 
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  rdtsc
+ *  Description:  Devuelve una semilla aletoria según las variables del equipo
+ * =====================================================================================
+ */
 int rdtsc()
 {
 	__asm__ __volatile__("rdtsc");
 }
 
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  main
+ *  Description:  Programa principal
+ * =====================================================================================
+ */
 int
 main (int argc, char **argv)
 {
