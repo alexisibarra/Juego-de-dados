@@ -27,15 +27,23 @@ main (int argc, char **argv)
 	int jvalue=p[2]; 
 	int i, n;
   int status;
+	int ganador=0;
+	int mayorPuntaje=0;
+	int totalTirada=0; 
   pid_t childpid;
 //	srand(svalue);
 	srand(rdtsc());
   for (i = 1; i <= jvalue; i++){
-		int x = rand();
+		int randN = rand();
 		childpid=fork();
 		if (childpid==0){
-			exit(tirarDados(i,nvalue,x));
-		}else 
+			totalTirada = tirarDados(i,nvalue,randN);
+			if (totalTirada>mayorPuntaje){
+				mayorPuntaje = (int)totalTirada;
+				ganador = i;
+			}
+			exit(totalTirada);
+		} else 
 		if (childpid <= 0)
 			break;
 	}
@@ -43,8 +51,13 @@ main (int argc, char **argv)
 		childpid = wait(&status);
 		if ((childpid == -1) && (errno != EINTR))
 			break;
-		printf("Un hijo con PID %d y padre %d termino con codigo de salida %d\n", childpid, getpid(), status>>8);
+//		printf("Un hijo con PID %d y padre %d termino con codigo de salida %d\n", childpid, getpid(), status>>8);
+//		totalTirada = status>>8;
+//		if (totalTirada>=mayorPuntaje){
+//			mayorPuntaje = totalTirada;
+//		}
   }
-  printf("Este es el proceso %ld con padre %ld\n", (long)getpid(), (long)getppid());
+//  printf("Este es el proceso %ld con padre %ld\n", (long)getpid(), (long)getppid());
+  printf("**** Gana el jugador %d, con %d puntos\n", ganador, mayorPuntaje);
 	return 0;
 }
