@@ -51,13 +51,7 @@ main (int argc, char **argv)
 		childpid = wait(&status);
 		if ((childpid == -1) && (errno != EINTR))
 			break;
-//		printf("Un hijo con PID %d y padre %d termino con codigo de salida %d\n", childpid, getpid(), status>>8);
-//		totalTirada = status>>8;
-//		if (totalTirada>=mayorPuntaje){
-//			mayorPuntaje = totalTirada;
-//		}
   }
-//  printf("Este es el proceso %ld con padre %ld\n", (long)getpid(), (long)getppid());
   printf("**** Gana el jugador %d, con %d puntos\n", ganador, mayorPuntaje);
 	return 0;
 }

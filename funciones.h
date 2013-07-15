@@ -172,8 +172,6 @@ int tirarDados(int indice, int nTiradas, int seed){
 	int tirada;
 	FILE *fp;
 	char nArchivo[80];
-//	printf("Soy el proceso %d\n",indice);
-//	printf("%d - Generé: ",indice);
 	sprintf(nArchivo,"tirada_%d",indice);
   fp = fopen(nArchivo, "w+");   
   if (fp == NULL) {
@@ -185,11 +183,9 @@ int tirarDados(int indice, int nTiradas, int seed){
 	for(j=1;j<=nTiradas;j++){
 		tirada = 1+rand()%6;
 		cuenta +=tirada; 
-//		printf("%d, ",tirada );
 		fprintf(fp,"Tirada %d: %d\n",j,tirada);
 	}
 	fprintf(fp,"TOTAL: %d\n",cuenta);
-//	printf("el total es %d\n",cuenta);
 	fclose(fp);
 	return cuenta;
 }
