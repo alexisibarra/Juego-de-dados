@@ -31,7 +31,6 @@ void *jugada(void *arg)
 	struct parametros * p;
 	p = ( struct parametros *) arg;
 	int *cuenta = (int *) malloc(sizeof(int));
-	printf("#####################################%d\n",p->n);
 	*cuenta = tirarDados(p->n,p->nvalue,p->randN);
 	pthread_exit(cuenta);
 }
@@ -40,7 +39,6 @@ int
 main (int argc, char **argv)
 {
 	int t;
-	int *tiempo_dormido1, *tiempo_dormido2;
 
 	int * p = procCML(argc,argv);
 	int nvalue=p[0]; 
@@ -50,7 +48,7 @@ main (int argc, char **argv)
   int status;
 	int ganador=0;
 	int mayorPuntaje=0;
-	int totalTirada=0; 
+	int *totalTirada=0; 
   pid_t childpid;
 //	srand(svalue);
 	srand(rdtsc());
@@ -66,12 +64,11 @@ main (int argc, char **argv)
 			perror("No se puede crear el hilo");
 		}
 		
-		pthread_join(threads[t], (void **)&tiempo_dormido1);
-			totalTirada = tirarDados(i,nvalue,randN);
-			if (totalTirada>mayorPuntaje){
-				mayorPuntaje = (int)totalTirada;
-				ganador = t+1;
-			}
+		pthread_join(threads[t], (void **)&totalTirada);
+		if (*totalTirada>mayorPuntaje){
+			mayorPuntaje = (int)*totalTirada;
+			ganador = t+1;
+		}
 	}
   printf("**** Gana el jugador %d, con %d puntos\n", ganador, mayorPuntaje);
 }
