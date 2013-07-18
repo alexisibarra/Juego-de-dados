@@ -49,7 +49,6 @@ main (int argc, char **argv)
 	int ganador=0;
 	int mayorPuntaje=0;
 	int *totalTirada=0; 
-  pid_t childpid;
 //	srand(svalue);
 	srand(rdtsc());
 
