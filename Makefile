@@ -18,4 +18,4 @@ juegodedados_h.o: juegodedados_h.c funciones.h
 	$(CC) $(CFLAGS) -c juegodedados_h.c funciones.h
 
 clean:
-	/bin/rm *.o juegodedados_p tirada_* *.h.gch  
+	/bin/rm *.o juegodedados_h juegodedados_p tirada_* *.h.gch  
