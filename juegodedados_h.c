@@ -56,7 +56,7 @@ main (int argc, char **argv)
 	for(t=0;t<jvalue;t++){
 		int randN = rand();
 		struct parametros vars;
-		vars.n = t;
+		vars.n = t+1;
 		vars.nvalue = nvalue;
 		vars.randN = randN;
 		if (pthread_create(&threads[t], NULL, (void*) jugada, (void*)&vars)){
