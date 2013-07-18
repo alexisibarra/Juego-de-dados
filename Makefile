@@ -2,8 +2,6 @@ CC = gcc
 CFLAGS = -pthread
 OBJS_P = juegodedados_p.o 
 OBJS_H = juegodedados_h.o 
-OBJS_T = hello_arg1.o 
-OBJS_T2 = hello_arg2.o 
 
 juegodedados_p: $(OBJS_P) 
 	$(CC) $(OBJS_P) -o $@
