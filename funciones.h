@@ -208,3 +208,19 @@ int rdtsc()
 {
 	__asm__ __volatile__("rdtsc");
 }
+
+struct parametros {
+	int indice;
+	int nvalue;
+	int randN;
+};
+
+void *jugada(void *arg)
+{
+	struct parametros * p;
+	p = ( struct parametros *) arg;
+	int *cuenta = (int *) malloc(sizeof(int));
+	*cuenta = tirarDados(p->indice,p->nvalue,p->randN);
+	pthread_exit(cuenta);
+}
+
