@@ -34,9 +34,12 @@ main (int argc, char **argv)
 	int mayorPuntaje=0;
 	int *totalTirada=0; 
 	pthread_t threads[values.j];
-
-//	srand(values.s);
-	srand(rdtsc());
+	
+	if(values.x){
+		srand(rdtsc());
+	}else{
+		srand(values.s);
+	}
 
 	if (!values.h){
 		for(t=0;t<values.j;t++){

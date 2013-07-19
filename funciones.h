@@ -30,6 +30,7 @@ struct CML{
 	int j;
 	int h;
 	int s;
+	int x;
 };
 
 //Estructura usada en la versión de hilos para llamar a la funcion tirarDados
@@ -90,18 +91,21 @@ int isNumeric (const char * s)
 struct CML
 procCML (int argc, char **argv)
 {
-	int hflag=0,nflag=0,sflag=0,jflag=0;
+	int hflag=0,nflag=0,sflag=0,jflag=0,xflag=0;
   int nvalue,svalue,jvalue;
   int c;
 	struct CML values; 
 
   opterr = 0;
 
-  while ((c = getopt (argc, argv, "hs:n:j:")) != -1)
+  while ((c = getopt (argc, argv, "hxs:n:j:")) != -1)
     switch (c)
       {
       case 'h':
         hflag = 1;
+        break;
+      case 'x':
+        xflag = 1;
         break;
       case 'n':
 				if (optarg != NULL){
@@ -167,6 +171,7 @@ procCML (int argc, char **argv)
 	values.s = svalue;
 	values.j = jvalue;
 	values.h = hflag;
+	values.x = xflag;
 	return values;
 }
 

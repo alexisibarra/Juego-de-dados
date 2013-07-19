@@ -32,8 +32,11 @@ main (int argc, char **argv)
   pid_t childpid;
 	int procesos[values.j];
 
-//	srand(values.s);
-	srand(rdtsc());
+	if(values.x){
+		srand(rdtsc());
+	}else{
+		srand(values.s);
+	}
 
 	if (!values.h){
 		for (i = 1; i <= values.j; i++){
