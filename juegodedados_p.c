@@ -30,9 +30,11 @@ main (int argc, char **argv)
 	int mayorPuntaje=0;
 	int totalTirada=0; 
   pid_t childpid;
+	int procesos[values.j];
+
 //	srand(values.s);
 	srand(rdtsc());
-	int procesos[values.j];
+
 	if (!values.h){
 		for (i = 1; i <= values.j; i++){
 			int randN = rand();
