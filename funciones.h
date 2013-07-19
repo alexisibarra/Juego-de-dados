@@ -181,7 +181,8 @@ int tirarDados(int indice, int nTiradas, int seed){
 	fprintf(fp,"Jugador: %d\n",indice);
 	fprintf(fp,"Número de tiradas: %d\n",nTiradas);
 	for(j=1;j<=nTiradas;j++){
-		tirada = 1+rand()%6;
+		tirada = 2+(rand()%12);
+		printf("%d\n",tirada);
 		cuenta +=tirada; 
 		fprintf(fp,"Tirada %d: %d\n",j,tirada);
 	}
