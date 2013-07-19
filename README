@@ -1,0 +1,40 @@
+#Juego de dados
+
+Se quiere simula un juego de dados entre varios jugadores. El juego consiste en
+que cada uno lanza dos dados un número de veces determinado previamente (e igual
+para todos). Gana el jugador que totalice mayor número sumando todas las tiradas.
+
+Se incluye dos versiones del programa, una usando procesos (juegodedados p) y
+otra usando hilos (juegodedados h). Cada jugador será representado por un
+proceso (o hilo), y habrá un coordinador (el croupier) que se encarga de darle
+a los dados (en realidad, la semilla para la generación de números aleatorios) a
+cada jugador, y de determinar quién es el ganador.
+
+
+## Sintaxis
+Ejecución de la versión procesos
+
+	> juegodedados_p [-n i] [-s x] [-j y] [-h] [-x]
+
+Ejecución de la versión hilos
+
+	> juegodedados_h [-n i] [-s x] [-j y] [-h] [-x]
+
+- “-n i” indica el número de tiradas (i) que hará cada jugador. Por defecto, se
+	usa el valor 10. El máximo es 20. 
+
+- “-s x”, el argumento x es un entero que corresponde a la semilla del generador
+	de números aleatorios que utilizará el croupier. Por defecto, la semilla tiene
+	el valor 1.
+
+- “-j y” indica el número de jugadores. Esta opción es obligatoria, salvo si se
+	usa la opción -h. No hay valor por defecto.
+
+- “-h” corresponde a la ayuda. Imprime un mensaje de ayuda y termina. El
+	mensaje de ayuda es del estilo del mensaje de un programa utilitario de Unix
+	invocado con la opción -h. Consiste en una breve ex-plicación de lo que
+	hace el comando y la sintaxis (entradas, opciones y o par ́metros de cada
+	opción).
+
+- "-x" permite alternar entre la semilla por defecto segun la explicación del
+	argumento de -s y una semilla tomada según parametros del sistema.
