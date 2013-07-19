@@ -10,8 +10,8 @@ proceso (o hilo), y habrá un coordinador (el croupier) que se encarga de darle
 a los dados (en realidad, la semilla para la generación de números aleatorios) a
 cada jugador, y de determinar quién es el ganador.
 
-
 ## Sintaxis
+
 Ejecución de la versión procesos
 
 	> juegodedados_p [-n i] [-s x] [-j y] [-h] [-x]
@@ -38,3 +38,9 @@ Ejecución de la versión hilos
 
 - "-x" permite alternar entre la semilla por defecto segun la explicación del
 	argumento de -s y una semilla tomada según parametros del sistema.
+
+## Autor
+
+Alexis Ramón Ibarra Salas
+ar.ibarrasalas@gmail.com
+www.github.com/alexisibarra
