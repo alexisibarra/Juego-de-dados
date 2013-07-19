@@ -224,6 +224,13 @@ int rdtsc()
 }
 
 
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  rdtsc
+ *  Description:  Empleada para realizar la jugada y hacer la llamada a exit en la 
+ *  							versión de hilos
+ * =====================================================================================
+ */
 void *jugada(void *arg)
 {
 	struct parametros * p;
