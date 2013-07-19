@@ -30,6 +30,12 @@ struct CML{
 	int s;
 };
 
+struct parametros {
+	int indice;
+	int nvalue;
+	int randN;
+};
+
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  usage
@@ -209,11 +215,6 @@ int rdtsc()
 	__asm__ __volatile__("rdtsc");
 }
 
-struct parametros {
-	int indice;
-	int nvalue;
-	int randN;
-};
 
 void *jugada(void *arg)
 {
