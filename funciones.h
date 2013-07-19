@@ -23,6 +23,8 @@
 #include <string.h>
 #include <sysexits.h>
 
+/// Estructura usada para almacenar los valores de los parametros de llamada 
+//del programa
 struct CML{
 	int n;
 	int j;
@@ -30,6 +32,7 @@ struct CML{
 	int s;
 };
 
+//Estructura usada en la versión de hilos para llamar a la funcion tirarDados
 struct parametros {
 	int indice;
 	int nvalue;
