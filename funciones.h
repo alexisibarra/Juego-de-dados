@@ -23,6 +23,13 @@
 #include <string.h>
 #include <sysexits.h>
 
+struct CML{
+	int n;
+	int j;
+	int h;
+	int s;
+};
+
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  usage
@@ -71,13 +78,13 @@ int isNumeric (const char * s)
  *       Salida:  outputs: arreglo de strings con los flags y valores procesados
  * =====================================================================================
  */
-int*
+struct CML
 procCML (int argc, char **argv)
 {
 	int hflag=0,nflag=0,sflag=0,jflag=0;
   int nvalue,svalue,jvalue;
   int c;
-	static int outputs[4];
+	struct CML values; 
 
   opterr = 0;
 
@@ -147,11 +154,11 @@ procCML (int argc, char **argv)
 	else {
 		printf("Numero de tiradas: %d\nSemilla: %d\nJugadores: %d\n",nvalue,svalue,jvalue);
 	}
-	outputs[0]=nvalue;
-	outputs[1]=svalue;
-	outputs[2]=jvalue;
-	outputs[3]=hflag;
-	return outputs;
+	values.n = nvalue;
+	values.s = svalue;
+	values.j = jvalue;
+	values.h = hflag;
+	return values;
 }
 
 /* 
@@ -182,7 +189,6 @@ int tirarDados(int indice, int nTiradas, int seed){
 	fprintf(fp,"Número de tiradas: %d\n",nTiradas);
 	for(j=1;j<=nTiradas;j++){
 		tirada = 2+(rand()%12);
-		printf("%d\n",tirada);
 		cuenta +=tirada; 
 		fprintf(fp,"Tirada %d: %d\n",j,tirada);
 	}
