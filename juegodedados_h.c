@@ -33,15 +33,16 @@ main (int argc, char **argv)
 	int ganador=0;
 	int mayorPuntaje=0;
 	int *totalTirada=0; 
-	pthread_t threads[values.j];
-	
-	if(values.x){
-		srand(rdtsc());
-	}else{
-		srand(values.s);
-	}
 
 	if (!values.h){
+		pthread_t threads[values.j];
+	
+		if(values.x){
+			srand(rdtsc());
+		}else{
+			srand(values.s);
+		}
+
 		for(t=0;t<values.j;t++){
 			int randN = rand();
 			struct parametros vars;
