@@ -1,8 +1,9 @@
 #Juego de dados
 
-Se quiere simula un juego de dados entre varios jugadores. El juego consiste en
-que cada uno lanza dos dados un número de veces determinado previamente (e igual
-para todos). Gana el jugador que totalice mayor número sumando todas las tiradas.
+Se simula un juego de dados entre varios jugadores. El juego consiste en que
+cada uno lanza dos dados un número de veces determinado previamente (e igual
+para todos). Gana el jugador que totalice mayor número sumando todas las
+tiradas.
 
 Se incluye dos versiones del programa, una usando procesos (juegodedados p) y
 otra usando hilos (juegodedados h). Cada jugador será representado por un
@@ -42,5 +43,7 @@ Ejecución de la versión hilos
 ## Autor
 
 Alexis Ramón Ibarra Salas
+
 ar.ibarrasalas@gmail.com
+
 www.github.com/alexisibarra
