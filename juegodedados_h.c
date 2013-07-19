@@ -3,7 +3,7 @@
  *
  *       Filename:  juegodedados_h.c
  *
- *    Description:  
+ *    Description:  Implementación de la versión de hilos del 'Juego de dados'
  *
  *        Version:  1.0
  *        Created:  14/07/13 16:07:18
