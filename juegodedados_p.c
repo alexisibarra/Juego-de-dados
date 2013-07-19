@@ -21,48 +21,52 @@
 int
 main (int argc, char **argv)
 {
-	int * p = procCML(argc,argv);
-	int nvalue=p[0]; 
-	int svalue=p[1]; 
-	int jvalue=p[2]; 
-	int i, n;
+	struct CML values;
+	values = procCML(argc,argv);
+	int i;
   int status;
 	int ganador=0;
+	int ganadorPID; 
 	int mayorPuntaje=0;
 	int totalTirada=0; 
-	int ganadorPID; 
   pid_t childpid;
-//	srand(svalue);
+//	srand(values.s);
 	srand(rdtsc());
-	int procesos[jvalue];
-  for (i = 1; i <= jvalue; i++){
-		int randN = rand();
-		childpid=fork();
-		procesos[i-1]=childpid;
-		if (childpid==0){
-			totalTirada = tirarDados(i,nvalue,randN);
-			exit(tirarDados(i,nvalue,randN));
-//			exit(totalTirada);
-		} else 
-		if (childpid <= 0)
-			break;
-	}
-  while (1) {
-		childpid = wait(&status);
-		totalTirada = status>>8;
-		if ((childpid == -1) && (errno != EINTR))
-			break;
-		if (totalTirada>mayorPuntaje){
-			mayorPuntaje = (int)totalTirada;
-			ganadorPID = childpid;
+	int procesos[values.j];
+	if (!values.h){
+		for (i = 1; i <= values.j; i++){
+			int randN = rand();
+			childpid=fork();
+			procesos[i-1]=childpid;
+			if (childpid==0){
+				exit(tirarDados(i,values.n,randN));
+			} else 
+			if (childpid <= 0){
+				printf("ERROR: fork() %s\n", strerror(errno));
+				break;
+			}
 		}
-		printf ("===%d--%d\n",childpid,status>>8);
-  }
-	for (i=0; i<jvalue; i++){
-		if(procesos[i]==ganadorPID){
-			ganador=i;
+		while (1) {
+			childpid = wait(&status);
+			totalTirada = status>>8;
+			if (errno == ECHILD){
+				break;
+			}
+			if ((childpid == -1) && (errno != EINTR) ){
+				printf("ERROR: wait() %s\n", strerror(errno));
+				break;
+			}
+			if (totalTirada>mayorPuntaje){
+				mayorPuntaje = totalTirada;
+				ganadorPID = childpid;
+			}
 		}
+		for (i=0; i<values.j; i++){
+			if(procesos[i]==ganadorPID){
+				ganador=i+1;
+			}
+		}
+		printf("**** Gana el jugador %d, con %d puntos\n", ganador, mayorPuntaje);
 	}
-  printf("**** Gana el jugador %d, con %d puntos\n", ganador, mayorPuntaje);
 	return 0;
 }
