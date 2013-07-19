@@ -20,55 +20,49 @@
 #include <pthread.h>
 #include "funciones.h"
 
-struct parametros {
-	int n;
-	int nvalue;
-	int randN;
-};
-
-void *jugada(void *arg)
-{
-	struct parametros * p;
-	p = ( struct parametros *) arg;
-	int *cuenta = (int *) malloc(sizeof(int));
-	*cuenta = tirarDados(p->n,p->nvalue,p->randN);
-	pthread_exit(cuenta);
-}
-
 int
 main (int argc, char **argv)
 {
 	int t;
 
-	int * p = procCML(argc,argv);
-	int nvalue=p[0]; 
-	int svalue=p[1]; 
-	int jvalue=p[2]; 
+	struct CML values;
+	values = procCML(argc,argv);
+
 	int i, n;
   int status;
 	int ganador=0;
 	int mayorPuntaje=0;
 	int *totalTirada=0; 
-//	srand(svalue);
+	pthread_t threads[values.j];
+
+//	srand(values.s);
 	srand(rdtsc());
 
-	pthread_t threads[jvalue];
-	for(t=0;t<jvalue;t++){
-		int randN = rand();
-		struct parametros vars;
-		vars.n = t+1;
-		vars.nvalue = nvalue;
-		vars.randN = randN;
-		if (pthread_create(&threads[t], NULL, (void*) jugada, (void*)&vars)){
-			perror("No se puede crear el hilo");
+	if (!values.h){
+		for(t=0;t<values.j;t++){
+			int randN = rand();
+			struct parametros vars;
+			vars.indice = t+1;
+			vars.nvalue = values.n;
+			vars.randN = randN;
+			if (pthread_create(&threads[t], NULL, (void*) jugada, (void*)&vars)){
+				perror("ERROR: pthread_create");
+				break;
+			}
 		}
-		
-		pthread_join(threads[t], (void **)&totalTirada);
-		if (*totalTirada>mayorPuntaje){
-			mayorPuntaje = (int)*totalTirada;
-			ganador = t+1;
+		for(t=0;t<values.j;t++){
+			if(pthread_join(threads[t], (void **)&totalTirada)){
+				perror("ERROR: pthread_join");
+				break;
+			};
+
+			if (*totalTirada>mayorPuntaje){
+				mayorPuntaje = (int)*totalTirada;
+				ganador = t+1;
+			}
 		}
+		printf("**** Gana el jugador %d, con %d puntos\n", ganador, mayorPuntaje);
 	}
-  printf("**** Gana el jugador %d, con %d puntos\n", ganador, mayorPuntaje);
+	return 0;
 }
 
